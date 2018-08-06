@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        let arr = ['a', 'b', 'c'];
+        // let iter = arr[Symbol.iterator]();
+        //
+        // var a = iter.next() // { value: 'a', done: false }
+        // console.log(a);
+        // a = iter.next() // { value: 'b', done: false }
+        // iter.next() // { value: 'c', done: false }
+        // iter.next() // { value: undefined, done: true }
+
+        // 部署 Iterator 接口的写法
+        // 一个对象具备Symbol.iterator属性 并且这个属性返回一个具有next函数的对象
+        // class RangeIterator {
+        //     constructor(start, stop) {
+        //         this.value = start;
+        //         this.stop = stop;
+        //     }
+        //
+        //     [Symbol.iterator]() {
+        //         return this;
+        //     }
+        //
+        //     next() {
+        //         var value = this.value;
+        //         if (value < this.stop) {
+        //             this.value++;
+        //             return {done: false, value: value};
+        //         }
+        //         return {done: true, value: undefined};
+        //     }
+        // }
+        //
+        // function range(start, stop) {
+        //     return new RangeIterator(start, stop);
+        // }
+        //
+        // for (var value of range(0, 3)) {
+        //     console.log(value);
+        // }
+
+        let obj = {
+          data: [ 'hello', 'world' ],
+          [Symbol.iterator]() {
+            const self = this;
+            let index = 0;
+            return {
+              next() {
+                if (index < self.data.length) {
+                  return {
+                    value: self.data[index++],
+                    done: false
+                  };
+                } else {
+                  return { value: undefined, done: true };
+                }
+              }
+            };
+          }
+        };
+
+        for(let value of obj) {
+            console.log(value);
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>
